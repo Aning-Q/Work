@@ -34,15 +34,15 @@ df_summary2 <- df2 %>%
 # 然后将前50的值设为 "top50"
 df_summary2$group[df_summary2$rank <= 50] <- "top50"
 df_summary2$group[df_summary2$rank > 50] <- "untop"
-#非交集部分
-inter <- intersect(df_summary1$Accession,df_summary2$Accession)
+#第二组特有部分
+inter <- data1$Accession
 df_summary2$group[!(df_summary2$Accession %in% inter)]  <-  "none"
 
 df_summary2$value <- log2(df_summary2$value)
 
 #数据合并-将非交集部分提到最后，以防覆盖
 df_summary <- rbind(df_summary1,df_summary2)
-savexlsx(df_summary,"scatter-WS.xlsx")
+savexlsx(df_summary,paste0(mapname,".xlsx"))
 df_summary <- df_summary %>% 
     arrange(factor(group, levels = c("untop","top50","none")))
 p <- ggplot(df_summary, aes(variable, value)) + 
