@@ -40,6 +40,9 @@ shape <- c(15,15,15,15,
 names(color) <- name
 names(line) <- name
 names(shape) <- name
+#图例顺序
+label <- c(name[grep(sheet[pos[1]],name)],
+           name[grep(sheet[pos[2]],name)])
 #pronumdata$class <- factor(rownames(pronumdata),labels = rep(1:20))
 p <- ggplot(plotdata,aes(x = factor(name,levels = name)))+
      geom_point(aes(y=pepnum,colour=pepgp,shape = pepgp),size = 4) +
@@ -50,9 +53,9 @@ p <- ggplot(plotdata,aes(x = factor(name,levels = name)))+
      geom_line(aes(y=pronum*10,group=progp,colour=progp,linetype=progp)) +
      scale_y_continuous(limits = c(floor(min(plotdata$pepnum)/1000)*1000,ceiling(max(plotdata$pronum)/10)*100),sec.axis = sec_axis(~./10,
                                          name = ' ProteinGroups Frequence\n'))+
-     scale_color_manual(values = color) +
-     scale_linetype_manual(values = line) +
-     scale_shape_manual(values = shape)+
+     scale_color_manual(values = color,labels = label) +
+     scale_linetype_manual(values = line,labels = label) +
+     scale_shape_manual(values = shape,labels = label)+
      labs(x="",y="StrippedSequence Frequence\n")+
      theme_light()+
       theme(
