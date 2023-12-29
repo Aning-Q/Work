@@ -93,7 +93,7 @@ ht_list <- Heatmap(heatdf,
         heatmap_width = unit(1, "npc"),
         heatmap_height = unit(1, "npc"),
         heatmap_legend_param = list(
-          at = c(-4,  4),
+          at = c(min(heatdf),  max(heatdf)),
           labels = c("Low",  "High"),
           legend_height = unit(4, "cm"),
           direction = "horizontal",
